@@ -7,9 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Domain\" />
-      <Folder Include="Interfaces\" />
       <Folder Include="Model\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FastScooter.Infrastructure\FastScooter.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
