@@ -2,42 +2,108 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 using FastScooter.API.Request;
+using FastScooter.API.Response;
 using FastScooter.Domain.Interfaces;
+using FastScooter.Infrastructure.Dtos;
+using FastScooter.Infrastructure.Interfaces;
 using FastScooter.Infrastructure.Models;
 
 namespace FastScooter.API.Controllers;
 
-[Route("api/user")]
+[Route("api/v1/user")]
 [ApiController]
 public class UserController : ControllerBase
 {
     // Dependency Injection
     private readonly IUserDomain _userDomain;
+    private readonly IUserInfrastructure _userInfrastructure;
     private readonly IMapper _mapper;
     
     // Constructor
-    public UserController(IUserDomain userDomain, IMapper mapper)
+    public UserController(IUserDomain userDomain, IUserInfrastructure userInfrastructure , IMapper mapper)
     {
         _userDomain = userDomain;
+        _userInfrastructure = userInfrastructure;
         _mapper = mapper;
     }
     
-    // ToDo: Return 201 Created
-    // ToDo: IActionResult
-    // HTTP Methods
-    // POST: api/user
-    [HttpPost(Name = "PostUser")]
-    public void Post([FromBody] UserRequest value)
+    // HTTP Methods (GET, POST, PUT, DELETE)
+    
+    // GET: api/v1/user
+    [HttpGet(Name = "GetUser")]
+    public async Task<IActionResult> Get()
     {
-        if (ModelState.IsValid)
+        try
         {
-            var user = _mapper.Map<UserRequest, User>(value);
-            _userDomain.CreateUser(user);
+            var users = await _userInfrastructure.GetUsersAsync();
+            var result = _mapper.Map<List<User>, List<UserResponse>>(users);
+            return Ok(result);
         }
-        else
+        catch (Exception e)
         {
-            StatusCode(400);
-            throw new Exception("Data was invalid");
+            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+        }
+    }
+    // GET: api/v1/user/{id}
+    [HttpGet("{id:int}", Name = "GetUserById")]
+    public async Task<IActionResult> Get(int id)
+    {
+        try
+        {
+            var user = await _userInfrastructure.GetUserByIdAsync(id);
+            var result = _mapper.Map<User, UserResponse>(user);
+            return Ok(result);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+        }
+    }
+    // POST: api/v1/user
+    [HttpPost(Name = "PostUser")]
+    public async Task<IActionResult> Post([FromBody] UserRequest input)
+    {
+        try
+        {
+            if (!ModelState.IsValid) return BadRequest();
+            
+            var user = _mapper.Map<UserRequest, User>(input);
+            var result = await _userDomain.CreateUserAsync(user);
+
+            return result > 0 ? StatusCode(StatusCodes.Status201Created, result) : BadRequest();
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+        }
+    }
+    // PUT: api/v1/user/{id}
+    [HttpPut("{id:int}", Name = "PutUser")]
+    public async Task<IActionResult> Put(int id, UserDto value)
+    {
+        try
+        {
+            if (!ModelState.IsValid) return BadRequest();
+            var result = await _userDomain.UpdateUserAsync(id, value);
+            return result ? StatusCode(StatusCodes.Status200OK) : BadRequest();
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+        }
+    }
+    // DELETE: api/v1/user/{id}
+    [HttpDelete("{id:int}", Name = "DeleteUser")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        try
+        {
+            var result = await _userDomain.DeleteUserAsync(id);
+            return result ? StatusCode(StatusCodes.Status200OK) : BadRequest();
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
         }
     }
 }
