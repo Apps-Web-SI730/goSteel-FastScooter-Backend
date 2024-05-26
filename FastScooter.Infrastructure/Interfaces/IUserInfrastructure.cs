@@ -5,7 +5,7 @@ namespace FastScooter.Infrastructure.Interfaces;
 
 public interface IUserInfrastructure
 {
-    // CRUD
+    // CRUD: Create, Read, Update and Delete
     Task<List<User>> GetUsersAsync();
     Task<User> GetUserByIdAsync(int id);
     Task<int> CreateUserAsync(User user);

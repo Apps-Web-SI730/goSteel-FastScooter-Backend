@@ -17,7 +17,7 @@ public class UserDomain : IUserDomain
     }
     
     // Interface methods implementation
-    // REMEMBER: Domain layer is responsible for business rules (in the interface) and NOT for data validation
+    // REMEMBER: Domain layer is responsible for business rules and NOT for data validation
     public async Task<int> CreateUserAsync(User user)
     {
         // TODO: Validations -> PASS TO API LAYER (Request and Response)
@@ -37,10 +37,10 @@ public class UserDomain : IUserDomain
     }
     public async Task<bool> DeleteUserAsync(int id)
     {
+        // TODO: Validations -> PASS TO API LAYER (Request and Response)
         if (!ExistsByIdValidation(id)) throw new Exception("User doesn't exist");
         return await _userInfrastructure.DeleteUserAsync(id);
     }
-
     // TODO: Validations -> PASS TO API LAYER (Request and Response)
     private bool ExistsByEmailValidation(string email)
     {

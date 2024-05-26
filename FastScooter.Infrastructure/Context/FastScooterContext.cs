@@ -16,4 +16,7 @@ public class FastScooterContext : DbContext
     
     // DbSets for the entities
     public DbSet<User> Users { get; init; }
+    public DbSet<Scooter> Scooters { get; init; }
+    public DbSet<Rent> Rents { get; init; }
+    // ToDo: public DbSet<Card> Cards { get; init; }
 }

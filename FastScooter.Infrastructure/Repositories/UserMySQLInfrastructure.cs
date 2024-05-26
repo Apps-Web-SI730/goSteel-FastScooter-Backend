@@ -31,7 +31,7 @@ public class UserMySQLInfrastructure : IUserInfrastructure
     public async Task<int> CreateUserAsync(User user)
     {
         user.IsActive = true;
-        user.DateCreated = DateTime.Now;
+        // user.DateCreated = DateTime.Now;
         
         _fastScooterContext.Users.Add(user);
         await _fastScooterContext.SaveChangesAsync();

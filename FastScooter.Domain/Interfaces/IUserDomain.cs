@@ -5,7 +5,7 @@ namespace FastScooter.Domain.Interfaces;
 
 public interface IUserDomain
 {
-    // CRUD
+    // CUD: Create, Update and Delete
     Task<int> CreateUserAsync(User user);
     Task<bool> UpdateUserAsync(int id, UserDto value);
     Task<bool> DeleteUserAsync(int id);

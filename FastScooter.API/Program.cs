@@ -13,9 +13,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-// Dependency Injection: AddScoped
+// Dependency Injection: AddScoped Infrastructure and Domain
 builder.Services.AddScoped<IUserInfrastructure, UserMySQLInfrastructure>();
 builder.Services.AddScoped<IUserDomain, UserDomain>();
+builder.Services.AddScoped<IScooterInfrastructure, ScooterMySQLInfrastructure>();
+builder.Services.AddScoped<IScooterDomain, ScooterDomain>();
 // Dependency Injection: AddAutoMapper
 builder.Services.AddAutoMapper(
     // typeof(ModelToResponse),
