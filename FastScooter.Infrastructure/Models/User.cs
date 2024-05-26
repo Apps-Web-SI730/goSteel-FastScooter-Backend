@@ -8,5 +8,5 @@ public class User : BaseModel
     public required string Role { get; set; }
     public DateTime BirthDate { get; set; }
     // The following property is for relationship mapping (one-to-many)
-    public required List<Scooter> Scooters { get; set; }
+    public List<Scooter>? Scooters { get; set; }
 }

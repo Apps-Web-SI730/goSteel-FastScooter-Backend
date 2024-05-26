@@ -8,5 +8,7 @@ public class UserRequest
     [Required] [MaxLength(60)] public required string Email { get; set; }
     [Required] [MinLength(5)] [MaxLength(100)]
     public required string Password { get; set; }
-    // Remenber: If you modify the User.cs (from FastScooter.Infrastructure.Models) class, you should modify this class too.
+    [Required] [MaxLength(20)] public required string Role { get; set; }
+    [Required] public DateTime BirthDate { get; set; }
+    public List<ScooterRequest>? Scooters { get; set; }
 }

@@ -21,7 +21,8 @@ public class UserMySQLInfrastructure : IUserInfrastructure
     // Interface methods implementation
     public async Task<List<User>> GetUsersAsync()
     {
-        return await _fastScooterContext.Users.Where(u => u.IsActive).ToListAsync();
+        return await _fastScooterContext.Users.Where(u => u.IsActive)
+            .Include(u => u.Scooters).ToListAsync();
     }
     public async Task<User> GetUserByIdAsync(int id)
     {
@@ -31,7 +32,6 @@ public class UserMySQLInfrastructure : IUserInfrastructure
     public async Task<int> CreateUserAsync(User user)
     {
         user.IsActive = true;
-        // user.DateCreated = DateTime.Now;
         
         _fastScooterContext.Users.Add(user);
         await _fastScooterContext.SaveChangesAsync();

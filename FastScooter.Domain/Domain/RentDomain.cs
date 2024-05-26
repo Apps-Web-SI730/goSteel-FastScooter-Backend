@@ -20,12 +20,13 @@ public class RentDomain : IRentDomain
     public async Task<int> CreateRentAsync(Rent rent)
     {
         // TODO: Validations -> PASS TO API LAYER (Request and Response)
-        ValidateRent(rent);
+        // ValidateRent(rent);
+        
         return await _rentInfrastructure.CreateRentAsync(rent);
     }
     // TODO: Validations -> PASS TO API LAYER (Request and Response)
-    private void ValidateRent(Rent rent)
-    {
-        
-    }
+    // private void ValidateRent(Rent rent)
+    // {
+    //     
+    // }
 }

@@ -18,6 +18,8 @@ builder.Services.AddScoped<IUserInfrastructure, UserMySQLInfrastructure>();
 builder.Services.AddScoped<IUserDomain, UserDomain>();
 builder.Services.AddScoped<IScooterInfrastructure, ScooterMySQLInfrastructure>();
 builder.Services.AddScoped<IScooterDomain, ScooterDomain>();
+builder.Services.AddScoped<IRentInfrastructure, RentMySQLInfrastructure>();
+builder.Services.AddScoped<IRentDomain, RentDomain>();
 // Dependency Injection: AddAutoMapper
 builder.Services.AddAutoMapper(
     // typeof(ModelToResponse),

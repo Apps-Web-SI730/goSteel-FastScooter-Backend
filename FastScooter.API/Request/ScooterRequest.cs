@@ -12,10 +12,7 @@ public class ScooterRequest
     public required string Model { get; set; }
     [Required] [MaxLength(500)]
     public required string Description { get; set; }
-    [Required]
-    public required string ImageUrl { get; set; }
-    [Required]
-    public decimal Price { get; set; }
-    [Required]
-    public int UserId { get; set; }
+    [Required] public required string ImageUrl { get; set; }
+    [Required] public double Price { get; set; }
+    // Define this: public List<RentRequest>? Rents { get; set; }
 }

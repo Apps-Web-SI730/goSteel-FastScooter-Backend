@@ -10,6 +10,6 @@ public class Scooter : BaseModel
     public decimal Price { get; set; }
     // The following property is for relationship mapping (many to one)
     public int UserId { get; set; }
-    // ToDo: public User User { get; set; };
-    // ToDo: public List<Rent> Rents { get; set; }
+    // The following property is for relationship mapping (one to many)
+    // Define this: public List<Rent>? Rents { get; set; }
 }

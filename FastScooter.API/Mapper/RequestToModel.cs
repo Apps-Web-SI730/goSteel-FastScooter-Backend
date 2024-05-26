@@ -10,7 +10,7 @@ public class RequestToModel : Profile
     public RequestToModel()
     {
         CreateMap<UserRequest, User>();
-        // CreateMap<ScooterRequest, Scooter>();
-        // CreateMap<RentRequest, Rent>();
+        CreateMap<ScooterRequest, Scooter>();
+        CreateMap<RentRequest, Rent>();
     }
 }
