@@ -41,7 +41,7 @@ public class UserDomain : IUserDomain
         if (!ExistsByIdValidation(id)) throw new Exception("User doesn't exist");
         return await _userInfrastructure.DeleteUserAsync(id);
     }
-    // TODO: Validations -> PASS TO API LAYER (Request and Response)
+    // TODO: Pass Validations (ONLY THOSE VALIDATIONS THAT DON'T USE _userInfrastructure) -> TO API LAYER (Request and Response)
     private bool ExistsByEmailValidation(string email)
     {
         return _userInfrastructure.ExistsByEmail(email);
