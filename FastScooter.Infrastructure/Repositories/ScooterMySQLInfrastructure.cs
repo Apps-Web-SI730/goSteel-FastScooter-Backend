@@ -28,7 +28,7 @@ public class ScooterMySQLInfrastructure : IScooterInfrastructure
     }
     public async Task<Scooter> GetScooterByUserIdAsync(int userId)
     {
-        return await _fastScooterContext.Scooters.FirstOrDefaultAsync(s => s.UserId == userId) ?? throw new InvalidOperationException();
+        return await _fastScooterContext.Scooters.FirstOrDefaultAsync(s => s.Id == userId) ?? throw new InvalidOperationException();
     }
     public async Task<int> CreateScooterAsync(Scooter scooter)
     {
