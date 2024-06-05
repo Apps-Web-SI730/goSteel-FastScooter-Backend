@@ -10,5 +10,7 @@ public interface IUserDomain
     Task<bool> UpdateUserAsync(int id, UserDto value);
     Task<bool> DeleteUserAsync(int id);
     // 
+    public int Login(User user);
+
     
 }
