@@ -10,5 +10,4 @@ public class UserRequest
     public required string Password { get; set; }
     [Required] [MaxLength(20)] public required string Role { get; set; }
     [Required] public DateTime BirthDate { get; set; }
-    public List<ScooterRequest>? Scooters { get; set; }
 }
