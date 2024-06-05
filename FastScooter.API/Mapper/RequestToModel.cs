@@ -12,5 +12,6 @@ public class RequestToModel : Profile
         CreateMap<UserRequest, User>();
         CreateMap<ScooterRequest, Scooter>();
         CreateMap<RentRequest, Rent>();
+        CreateMap<FavoriteRequest, Favorites>();
     }
 }
