@@ -22,7 +22,7 @@ public class UserMySQLInfrastructure : IUserInfrastructure
     public async Task<List<User>> GetUsersAsync()
     {
         return await _fastScooterContext.Users.Where(u => u.IsActive)
-            .Include(u => u.Scooters).ToListAsync();
+           .ToListAsync();
     }
     public async Task<User> GetUserByIdAsync(int id)
     {
@@ -32,7 +32,6 @@ public class UserMySQLInfrastructure : IUserInfrastructure
     public async Task<int> CreateUserAsync(User user)
     {
         user.IsActive = true;
-        
         _fastScooterContext.Users.Add(user);
         await _fastScooterContext.SaveChangesAsync();
         
@@ -64,7 +63,34 @@ public class UserMySQLInfrastructure : IUserInfrastructure
         
         return true;
     }
-    
+
+    public bool ExistsByEmailAndPassword(string email, string password)
+    {
+        return _fastScooterContext.Users.Any(
+            e => e.Email == email &&
+                 e.Password == email &&
+                 e.IsActive == true
+        );
+    }
+
+    public int GetUserIdByEmailAndPassword(User user)
+    {
+        var matchingUser = _fastScooterContext.Users.FirstOrDefault(
+            c => c.IsActive &&
+                 c.Email == user.Email &&
+                 c.Password == user.Password);
+     
+            return matchingUser.Id;
+            
+    }
+
+    public int GetUserIdByEmail(User user)
+    {
+        var userToGet = _fastScooterContext.Users.FirstOrDefaultAsync(
+            u => u.IsActive && u.Email == user.Email);
+        return userToGet.Id;
+    }
+
     // I'm not sure if the validations methods below should be placed in another Layer (maybe the API layer?)
     public bool ExistsByEmail(string email)
     {
@@ -77,5 +103,10 @@ public class UserMySQLInfrastructure : IUserInfrastructure
     public bool ExistsById(int id)
     {
         return _fastScooterContext.Users.Any(u => u.Id == id && u.IsActive);
+    }
+
+    public Task<int> Signup(User user)
+    {
+        throw new NotImplementedException();
     }
 }
