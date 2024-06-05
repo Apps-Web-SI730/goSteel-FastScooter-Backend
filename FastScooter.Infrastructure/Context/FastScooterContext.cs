@@ -18,5 +18,16 @@ public class FastScooterContext : DbContext
     public DbSet<User> Users { get; init; }
     public DbSet<Scooter> Scooters { get; init; }
     public DbSet<Rent> Rents { get; init; }
-    // ToDo: public DbSet<Card> Cards { get; init; }
+    
+    public DbSet<Favorites> Favorites { get; init; }
+    
+
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+        
+      //  builder.Entity<User>()("Tutorial");
+
+    }
 }

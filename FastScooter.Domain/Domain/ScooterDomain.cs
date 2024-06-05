@@ -21,7 +21,6 @@ public class ScooterDomain : IScooterDomain
     {
         // TODO: Validations -> PASS TO API LAYER (Request and Response)
         IsValidCreate(scooter);
-        ExistsByIdValidation(scooter.UserId);
         
         return await _scooterInfrastructure.CreateScooterAsync(scooter);
     }
@@ -50,7 +49,6 @@ public class ScooterDomain : IScooterDomain
         if (string.IsNullOrEmpty(scooter.Description)) throw new Exception("Description is required");
         if (scooter.Description.Length > 500) throw new Exception("Description has to be less than 500 characters");
         if (scooter.Price <= 0) throw new Exception("Price has to be greater than 0");
-        if (scooter.UserId <= 0) throw new Exception("UserId has to be greater than 0");
     }
     private bool ExistsByIdValidation(int id)
     {
