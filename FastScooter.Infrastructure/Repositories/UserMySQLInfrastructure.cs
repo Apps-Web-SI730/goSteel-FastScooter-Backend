@@ -94,7 +94,7 @@ public class UserMySQLInfrastructure : IUserInfrastructure
     // I'm not sure if the validations methods below should be placed in another Layer (maybe the API layer?)
     public bool ExistsByEmail(string email)
     {
-        return _fastScooterContext.Users.Any(u => u.Email == email);
+        return _fastScooterContext.Users.Any(u => u.Email == email && u.IsActive==true);
     }
     public bool ExistsByIdAndEmail(int id, string email)
     {
@@ -102,7 +102,7 @@ public class UserMySQLInfrastructure : IUserInfrastructure
     }
     public bool ExistsById(int id)
     {
-        return _fastScooterContext.Users.Any(u => u.Id == id && u.IsActive);
+        return _fastScooterContext.Users.Any(u => u.Id == id && u.IsActive==true);
     }
 
     public Task<int> Signup(User user)
