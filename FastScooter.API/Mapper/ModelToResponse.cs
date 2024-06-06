@@ -10,5 +10,9 @@ public class ModelToResponse : Profile
     public ModelToResponse()
     {
         CreateMap<User, UserResponse>();
+        CreateMap<Favorites, FavoriteResponse>();
+        CreateMap<Payment, PaymentResponse>();
+
+
     }
 }
