@@ -13,4 +13,6 @@ public interface IScooterInfrastructure
     Task<bool> DeleteScooterAsync(int id);
     //
     public bool ExistsById(int id);
+    
+    List<Scooter> GetAll();
 }
