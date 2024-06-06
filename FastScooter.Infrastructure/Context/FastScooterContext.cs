@@ -21,6 +21,7 @@ public class FastScooterContext : DbContext
     
     public DbSet<Favorites> Favorites { get; init; }
     
+    public DbSet<Payment> Payments { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder builder)
