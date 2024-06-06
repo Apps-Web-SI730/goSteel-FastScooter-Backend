@@ -68,4 +68,9 @@ public class ScooterMySQLInfrastructure : IScooterInfrastructure
     {
         return _fastScooterContext.Scooters.Any(s => s.Id == id && s.IsActive);
     }
+
+    public List<Scooter> GetAll()
+    {
+        return  _fastScooterContext.Scooters.Where(x => x.IsActive == true).ToList();
+    }
 }
