@@ -7,8 +7,22 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="12.0.1" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.19"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.19" />
+        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Filter\" />
+      <Folder Include="Middleware\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FastScooter.Domain\FastScooter.Domain.csproj" />
+      <ProjectReference Include="..\FastScooter.Infrastructure\FastScooter.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
