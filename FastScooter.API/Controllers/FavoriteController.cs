@@ -32,7 +32,7 @@ public class FavoriteController: ControllerBase
      
   
      [HttpGet("userId/{userId}", Name = "GetAllFavoritesByUserId")]
-     /*public async Task<ActionResult<List<FavoriteResponse>>> GetAllByUserId(int userId)
+     public async Task<ActionResult<List<FavoriteResponse>>> GetAllByUserId(int userId)
      {
           try
           {
@@ -47,9 +47,9 @@ public class FavoriteController: ControllerBase
           {
                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
           }
-     }*/
+     }
      
-     /*[HttpGet("scooterId/{userId}", Name = "GetAllFavoritesScooterId")]
+     [HttpGet("scooterId/{userId}", Name = "GetAllFavoritesScooterId")]
      public async Task<ActionResult<List<FavoriteResponse>>> GetAllByScooterId(int userId)
      {
           try
@@ -78,6 +78,6 @@ public class FavoriteController: ControllerBase
           {
                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
           }
-     }*/
+     }
      
 }
