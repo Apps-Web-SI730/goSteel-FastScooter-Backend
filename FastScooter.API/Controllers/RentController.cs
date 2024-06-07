@@ -56,4 +56,26 @@ public class RentController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
         }
     }
+    // GET: api/rent/available
+    [HttpGet("available/{scooterId}", Name = "GetAvailableScooters")]
+    public bool GetAvailableScooters(int bikeId, DateTime start, DateTime end)
+    {
+        return _rentDomain.AvailableScooter(bikeId, start, end);
+    }
+    
+    
+    // GET: api/rent/available
+    [HttpGet("available/", Name = "GetAllAvailableScootersForDate")]
+    public List<Scooter> GetAvailableScooters( DateTime start, DateTime end)
+    {
+        return _rentDomain.GetAvailableScooters( start, end);
+    }
+    
+    
+    // DELETE: api/rent/5
+    [HttpDelete("{id}", Name = "DeleteRent")]
+    public void Delete(int id)
+    {
+        _rentDomain.CancelUnfinishedRent(id);
+    }
 }
