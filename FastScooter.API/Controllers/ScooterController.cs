@@ -98,7 +98,7 @@ public class ScooterController : ControllerBase
         }
     }
     // DELETE: api/v1/scooter/{id}
-    [HttpDelete("{id:int}", Name = "DeleteScooter")]
+    [HttpDelete("delete/{id:int}", Name = "DeleteScooter")]
     public async Task<IActionResult> Delete(int id)
     {
         try
@@ -109,6 +109,6 @@ public class ScooterController : ControllerBase
         catch (Exception e)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-        }
-    }
+        }
+    }
 }
