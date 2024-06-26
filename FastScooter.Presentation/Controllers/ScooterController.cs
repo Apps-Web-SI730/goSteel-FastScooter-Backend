@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 using FastScooter.API.Request;
+using FastScooter.API.Response;
 using FastScooter.Domain.Interfaces;
 using FastScooter.Infrastructure.Interfaces;
 using FastScooter.Infrastructure.Models;
@@ -38,7 +39,7 @@ public class ScooterController : ControllerBase
         try
         {
             var scooters = await _scooterInfrastructure.GetScootersAsync();
-            var result = _mapper.Map<List<Scooter>, List<ScooterRequest>>(scooters);
+            var result = _mapper.Map<List<ScooterResponse>>(scooters);
             return Ok(result);
         }
         catch (Exception e)
@@ -53,7 +54,7 @@ public class ScooterController : ControllerBase
         try
         {
             var scooter = await _scooterInfrastructure.GetScooterByIdAsync(id);
-            var result = _mapper.Map<Scooter, ScooterRequest>(scooter);
+            var result = _mapper.Map<Scooter, ScooterResponse>(scooter);
             return Ok(result);
         }
         catch (Exception e)

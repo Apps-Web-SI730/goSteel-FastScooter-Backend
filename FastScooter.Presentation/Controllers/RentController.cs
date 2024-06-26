@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 using FastScooter.API.Request;
+using FastScooter.API.Response;
 using FastScooter.Domain.Interfaces;
 using FastScooter.Infrastructure.Interfaces;
 using FastScooter.Infrastructure.Models;
@@ -29,6 +30,20 @@ public class RentController : ControllerBase
         _mapper = mapper;
     }
     
+    [HttpGet(Name = "getAllRent")]
+    public async Task<IActionResult> Get()
+    {
+        try
+        {
+            var rents = await  _rentInfrastructure.GetAll();
+            var result = _mapper.Map<List<RentResponse>>(rents);
+            return Ok(result);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+        }
+    }
     // Endpoints with HTTP Methods (GET && POST)
     
     // ToDO: Get: api/v1/rent/available

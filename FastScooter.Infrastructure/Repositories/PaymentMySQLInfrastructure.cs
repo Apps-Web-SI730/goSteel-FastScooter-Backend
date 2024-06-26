@@ -17,7 +17,7 @@ public class PaymentMySQLInfrastructure :IPaymentInfrastructure
 
 
     public bool save(Payment payment)
-    {
+    {   payment.IsActive = true;
         _context.Payments.Add(payment);
         _context.SaveChanges();
         return true;

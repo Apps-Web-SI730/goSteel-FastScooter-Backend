@@ -14,5 +14,5 @@ public class RentRequest
     public int? ScooterId { get; set; }
     [Required]
     public int UserId { get; set; }
-
+    
 }
