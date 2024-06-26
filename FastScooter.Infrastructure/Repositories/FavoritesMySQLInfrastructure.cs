@@ -14,7 +14,7 @@ public class FavoritesMySQLInfrastructure : IFavoriteInfrastructure
         _fastScooterContext = fastScooterContext;
     }
     public bool save(Favorites favorites)
-    {
+    {           favorites.IsActive = true;
         _fastScooterContext.Favorites.Add(favorites);
         _fastScooterContext.SaveChanges();
         return true;

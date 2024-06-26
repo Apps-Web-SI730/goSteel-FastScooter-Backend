@@ -12,6 +12,8 @@ public class ModelToResponse : Profile
         CreateMap<User, UserResponse>();
         CreateMap<Favorites, FavoriteResponse>();
         CreateMap<Payment, PaymentResponse>();
+        CreateMap<Scooter, ScooterResponse>();
+        CreateMap<Rent, RentResponse>();
 
 
     }

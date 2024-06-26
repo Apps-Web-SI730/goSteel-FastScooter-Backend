@@ -24,6 +24,7 @@ public class RentMySQLInfrastructure : IRentInfrastructure
     }
     public async Task<int> CreateRentAsync(Rent rent)
     {
+        rent.IsActive = true;
         _fastScooterContext.Rents.Add(rent);
         await _fastScooterContext.SaveChangesAsync();
         
@@ -40,9 +41,9 @@ public class RentMySQLInfrastructure : IRentInfrastructure
         return await _fastScooterContext.Rents.Where(rent => rent.UserId == scooterId).ToListAsync();
     }
 
-    public List<Rent> GetAll()
+    public async Task<List<Rent>> GetAll()
     {
-        return _fastScooterContext.Rents.Where(x=>x.IsActive==true).ToList();
+        return await _fastScooterContext.Rents.Where(x=>x.IsActive==true).ToListAsync();
     }
 
     public bool delete(int id)
