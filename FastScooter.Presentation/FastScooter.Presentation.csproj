@@ -19,6 +19,7 @@
 
     <ItemGroup>
       <Folder Include="Filter\" />
+      <Folder Include="IAM\" />
       <Folder Include="Middleware\" />
     </ItemGroup>
 

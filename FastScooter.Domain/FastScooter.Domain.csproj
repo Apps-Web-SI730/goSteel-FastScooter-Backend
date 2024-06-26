@@ -7,6 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+<<<<<<< HEAD
+=======
+      <Folder Include="IAM\" />
+      <Folder Include="Model\" />
+    </ItemGroup>
+
+    <ItemGroup>
+>>>>>>> origin/clean-architecture-ddd
       <ProjectReference Include="..\FastScooter.Infrastructure\FastScooter.Infrastructure.csproj" />
     </ItemGroup>
 
