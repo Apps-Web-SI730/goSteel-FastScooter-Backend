@@ -172,5 +172,25 @@
         // Assert
         Assert.IsType<BadRequestResult>(result);
     }
-        
+    
+    [Fact]
+    public async Task Post_WhenCalledWithInvalidRent_ReturnsBadRequest()
+    {
+        // Arrange
+        var mockMapper = new Mock<IMapper>();
+        var mockRentInfrastructure = new Mock<IRentInfrastructure>();
+        var mockRentDomain = new Mock<IRentDomain>();
+        var rentRequest = new RentRequest();
+        var rent = new Rent();
+        mockMapper.Setup(x => x.Map<RentRequest, Rent>(rentRequest)).Returns(rent);
+        mockRentDomain.Setup(x => x.CreateRentAsync(rent)).Throws(new Exception());
+        var controller = new RentController(mockRentInfrastructure.Object, mockRentDomain.Object, mockMapper.Object);
+
+        // Act
+        var result = await controller.Post(rentRequest);
+
+        // Assert
+        var badRequestResult = Assert.IsType<BadRequestResult>(result);
+    }
+    
  }
