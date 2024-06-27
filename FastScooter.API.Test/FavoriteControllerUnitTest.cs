@@ -223,5 +223,4 @@ public class FavoriteControllerUnitTest
         var okResult = Assert.IsType<StatusCodeResult>(result);
         Assert.Equal((int)HttpStatusCode.OK, okResult.StatusCode);
     }
-
 }
