@@ -8,6 +8,7 @@ public interface IRentInfrastructure
     List<Rent> GetByScooterIdNoAsync(int scooterId); 
     Task<int> CreateRentAsync(Rent rent);
     Task<List<Rent>> GetByUserId(int userId);
+
     Task<List<Rent>> GetByScooterId(int scooterId);
     Task<List<Rent>> GetAll();
     public bool delete(int id);

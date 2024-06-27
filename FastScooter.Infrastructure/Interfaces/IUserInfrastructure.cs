@@ -21,5 +21,7 @@ public interface IUserInfrastructure
     public bool ExistsByIdAndEmail(int id, string email);
     public bool ExistsById(int id);
     Task<int> Signup(User user);
+    Task<User> GetByUsername(string username);
+
 
 }

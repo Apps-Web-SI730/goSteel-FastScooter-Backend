@@ -7,6 +7,7 @@ using FastScooter.Domain.Interfaces;
 using FastScooter.Infrastructure.Dtos;
 using FastScooter.Infrastructure.Interfaces;
 using FastScooter.Infrastructure.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FastScooter.API.Controllers;
 
@@ -108,6 +109,42 @@ public class UserController : ControllerBase
         catch (Exception e)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+        }
+    }
+    // POST: api/user/loginrev1
+    [AllowAnonymous]
+    [HttpPost]
+    [Route("loginrev1")]
+    public async Task<IActionResult> LoginRev1([FromBody] LoginRequest userInput)
+    {
+        try
+        {
+            var user = _mapper.Map<LoginRequest, User>(userInput);
+            var response = await _userDomain.LoginRev1(user);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            throw;
+            return StatusCode(StatusCodes.Status500InternalServerError, "Error al procesar");
+        }
+    }
+    // POST: api/user/signuprev1
+    [AllowAnonymous]
+    [HttpPost]
+    [Route("signuprev1")]
+    public async Task<IActionResult> SignupRev1([FromBody] UserRequest userInput)
+    {
+        try
+        {
+            var user = _mapper.Map<UserRequest, User>(userInput);
+            var response = await _userDomain.SignupRev1(user);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            throw;
+            return StatusCode(StatusCodes.Status500InternalServerError, "Error al procesar");
         }
     }
 }
