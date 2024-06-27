@@ -182,6 +182,62 @@ public class PaymentDomainUnitTest
         // Act & Assert
         Assert.Throws<Exception>(() => domain.RemovePayment(1));
     }
+    
+    [Fact]
+    public void CreateNewPayment_WhenCalledWithPaymentHavingInvalidAmount_ThrowsException()
+    {
+        // Arrange
+        var mockPaymentInfrastructure = new Mock<IPaymentInfrastructure>();
+        var mockUserInfrastructure = new Mock<IUserInfrastructure>();
+        var mockRentInfrastructure = new Mock<IRentInfrastructure>();
+        var payment = new Payment
+        {
+            UserId = 1,
+            RentId = 1,
+            Amount = -1 // Invalid amount
+        };
+        mockUserInfrastructure.Setup(x => x.ExistsById(It.IsAny<int>())).Returns(true);
+        mockRentInfrastructure.Setup(x => x.ExistsById(It.IsAny<int>())).Returns(true);
+        var domain = new PaymentDomain(mockPaymentInfrastructure.Object, mockUserInfrastructure.Object, mockRentInfrastructure.Object);
+
+        // Act & Assert
+        Assert.Throws<Exception>(() => domain.CreateNewPayment(payment));
+    }
+
+    [Fact]
+    public void CreateNewPayment_WhenCalledWithPaymentHavingInvalidDate_ThrowsException()
+    {
+        // Arrange
+        var mockPaymentInfrastructure = new Mock<IPaymentInfrastructure>();
+        var mockUserInfrastructure = new Mock<IUserInfrastructure>();
+        var mockRentInfrastructure = new Mock<IRentInfrastructure>();
+        var payment = new Payment
+        {
+            UserId = 1,
+            RentId = 1,
+            Amount = 100,
+        };
+        mockUserInfrastructure.Setup(x => x.ExistsById(It.IsAny<int>())).Returns(true);
+        mockRentInfrastructure.Setup(x => x.ExistsById(It.IsAny<int>())).Returns(true);
+        var domain = new PaymentDomain(mockPaymentInfrastructure.Object, mockUserInfrastructure.Object, mockRentInfrastructure.Object);
+
+        // Act & Assert
+        Assert.Throws<Exception>(() => domain.CreateNewPayment(payment));
+    }
+
+[Fact]
+public void RemovePayment_WhenCalledWithNonExistingPaymentId_ThrowsException()
+{
+    // Arrange
+    var mockPaymentInfrastructure = new Mock<IPaymentInfrastructure>();
+    var mockUserInfrastructure = new Mock<IUserInfrastructure>();
+    var mockRentInfrastructure = new Mock<IRentInfrastructure>();
+    mockPaymentInfrastructure.Setup(x => x.existsById(It.IsAny<int>())).Returns(false);
+    var domain = new PaymentDomain(mockPaymentInfrastructure.Object, mockUserInfrastructure.Object, mockRentInfrastructure.Object);
+
+    // Act & Assert
+    Assert.Throws<Exception>(() => domain.RemovePayment(-1)); // Non-existing PaymentId
+}
 
         
 }
