@@ -302,5 +302,61 @@ public async Task GetAllByScooterId_WhenCalledWithValidScooterId_ReturnsListOfFa
     }
     
     
+[Fact]
+public void RemoveFavorite_WhenCalledWithNonExistingFavorite_ThrowsException()
+{
+    // Arrange
+    var mockFavoriteInfrastructure = new Mock<IFavoriteInfrastructure>();
+    var mockUserInfrastructure = new Mock<IUserInfrastructure>();
+    var mockScooterInfrastructure = new Mock<IScooterInfrastructure>();
+    mockFavoriteInfrastructure.Setup(x => x.existsById(It.IsAny<int>())).Returns(false);
+    var domain = new FavoriteDomain(mockFavoriteInfrastructure.Object, mockUserInfrastructure.Object, mockScooterInfrastructure.Object);
+
+    // Act & Assert
+    Assert.Throws<Exception>(() => domain.RemoveFavorite(1));
+}
+
+[Fact]
+public async Task GetAllByUserId_WhenCalledWithNonExistingUser_ThrowsException()
+{
+    // Arrange
+    var mockFavoriteInfrastructure = new Mock<IFavoriteInfrastructure>();
+    var mockUserInfrastructure = new Mock<IUserInfrastructure>();
+    var mockScooterInfrastructure = new Mock<IScooterInfrastructure>();
+    mockUserInfrastructure.Setup(x => x.ExistsById(It.IsAny<int>())).Returns(false);
+    var domain = new FavoriteDomain(mockFavoriteInfrastructure.Object, mockUserInfrastructure.Object, mockScooterInfrastructure.Object);
+
+    // Act & Assert
+    await Assert.ThrowsAsync<Exception>(() => domain.GetAllByUserId(1));
+}
+
+[Fact]
+public async Task GetAllByScooterId_WhenCalledWithNonExistingScooter_ThrowsException()
+{
+    // Arrange
+    var mockFavoriteInfrastructure = new Mock<IFavoriteInfrastructure>();
+    var mockUserInfrastructure = new Mock<IUserInfrastructure>();
+    var mockScooterInfrastructure = new Mock<IScooterInfrastructure>();
+    mockScooterInfrastructure.Setup(x => x.ExistsById(It.IsAny<int>())).Returns(false);
+    var domain = new FavoriteDomain(mockFavoriteInfrastructure.Object, mockUserInfrastructure.Object, mockScooterInfrastructure.Object);
+
+    // Act & Assert
+    await Assert.ThrowsAsync<Exception>(() => domain.GetAllByScooterId(1));
+}
+
+[Fact]
+public async Task CancelFavorite_WhenCalledWithNonExistingFavorite_ThrowsException()
+{
+    // Arrange
+    var mockFavoriteInfrastructure = new Mock<IFavoriteInfrastructure>();
+    var mockUserInfrastructure = new Mock<IUserInfrastructure>();
+    var mockScooterInfrastructure = new Mock<IScooterInfrastructure>();
+    mockFavoriteInfrastructure.Setup(x => x.existsById(It.IsAny<int>())).Returns(false);
+    var domain = new FavoriteDomain(mockFavoriteInfrastructure.Object, mockUserInfrastructure.Object, mockScooterInfrastructure.Object);
+
+    // Act & Assert
+    await Assert.ThrowsAsync<Exception>(() => domain.CancelFavorite(1));
+}
+    
     
 }
