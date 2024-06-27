@@ -231,5 +231,44 @@ public class RentDomainUnitTest
         Assert.Empty(result);
     }
     
+    [Fact]
+public async Task CreateRentAsync_WhenCalledWithRentHavingInvalidDates_ThrowsException()
+{
+    // Arrange
+    var mockRentInfrastructure = new Mock<IRentInfrastructure>();
+    var mockScooterInfrastructure = new Mock<IScooterInfrastructure>();
+    var mockUserInfrastructure = new Mock<IUserInfrastructure>();
+    var rent = new Rent
+    {
+        UserId = 1,
+        ScooterId = 1,
+        StartDate = DateTime.Now.AddDays(1),
+        EndDate = DateTime.Now // EndDate is before StartDate
+    };
+    mockUserInfrastructure.Setup(x => x.ExistsById(It.IsAny<int>())).Returns(true);
+    mockScooterInfrastructure.Setup(x => x.ExistsById(It.IsAny<int>())).Returns(true);
+    var domain = new RentDomain(mockRentInfrastructure.Object, mockScooterInfrastructure.Object, mockUserInfrastructure.Object);
+
+    // Act & Assert
+    await Assert.ThrowsAsync<Exception>(() => domain.CreateRentAsync(rent));
+}
+
+[Fact]
+public void AvailableScooter_WhenCalledWithInvalidScooterId_ReturnsFalse()
+{
+    // Arrange
+    var mockRentInfrastructure = new Mock<IRentInfrastructure>();
+    var mockScooterInfrastructure = new Mock<IScooterInfrastructure>();
+    var mockUserInfrastructure = new Mock<IUserInfrastructure>();
+    mockRentInfrastructure.Setup(x => x.GetByScooterIdNoAsync(It.IsAny<int>())).Returns(new List<Rent> { new Rent { StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(1) } });
+    var domain = new RentDomain(mockRentInfrastructure.Object, mockScooterInfrastructure.Object, mockUserInfrastructure.Object);
+
+    // Act
+    var result = domain.AvailableScooter(-1, DateTime.Now, DateTime.Now.AddDays(1)); // Invalid ScooterId
+
+    // Assert
+    Assert.False(result);
+}
+
     
 }
