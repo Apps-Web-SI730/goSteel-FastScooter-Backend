@@ -183,7 +183,7 @@ public class PaymentDomainUnitTest
         Assert.Throws<Exception>(() => domain.RemovePayment(1));
     }
     
-    [Fact]
+   [Fact]
     public void CreateNewPayment_WhenCalledWithPaymentHavingInvalidAmount_ThrowsException()
     {
         // Arrange
@@ -203,8 +203,8 @@ public class PaymentDomainUnitTest
         // Act & Assert
         Assert.Throws<Exception>(() => domain.CreateNewPayment(payment));
     }
-
-    [Fact]
+   
+   [Fact]
     public void CreateNewPayment_WhenCalledWithPaymentHavingInvalidDate_ThrowsException()
     {
         // Arrange
