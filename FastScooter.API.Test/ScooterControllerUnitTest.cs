@@ -265,7 +265,7 @@ public class ScooterControllerUnitTest
     }
     
     
-   /*[Fact]
+   [Fact]
     public async Task Post_WhenCalled_ReturnsCreatedResult()
     {
         // Arrange
@@ -298,7 +298,7 @@ public class ScooterControllerUnitTest
         // Assert
         Assert.IsType<StatusCodeResult>(result);
         Assert.Equal(201, ((StatusCodeResult)result).StatusCode);
-    }*/
+    }
     
     
     [Fact]
@@ -316,5 +316,5 @@ public class ScooterControllerUnitTest
         // Assert
         Assert.IsType<BadRequestResult>(result);
     }
-
+    
 }
