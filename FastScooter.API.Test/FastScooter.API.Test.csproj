@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="12.0.1" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.20" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+      <PackageReference Include="Moq" Version="4.20.70" />
+      <PackageReference Include="NSubstitute" Version="5.1.0" />
+      <PackageReference Include="xunit" Version="2.8.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FastScooter.API\FastScooter.API.csproj" />
+      <ProjectReference Include="..\FastScooter.Domain\FastScooter.Domain.csproj" />
+      <ProjectReference Include="..\FastScooter.Infrastructure\FastScooter.Infrastructure.csproj" />
+      <ProjectReference Include="..\FastScooter.Shared\FastScooter.Shared.csproj" />
+    </ItemGroup>
+
+</Project>
