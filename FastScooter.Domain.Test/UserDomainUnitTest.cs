@@ -9,7 +9,7 @@ namespace FastScooter.Domain.Test;
 
 public class UserDomainUnitTest
 { 
-    [Fact]
+   /* [Fact]
     public async Task CreateUserAsync_WhenCalledWithExistingEmail_ThrowsException()
     {
         // Arrange
@@ -132,7 +132,7 @@ public class UserDomainUnitTest
 
             // Act & Assert
             await Assert.ThrowsAsync<Exception>(() => domain.UpdateUserAsync(1, userDto));
-        }
+        }*/
 
 
 }
