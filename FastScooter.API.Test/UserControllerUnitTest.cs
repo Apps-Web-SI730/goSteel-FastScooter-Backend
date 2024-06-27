@@ -15,24 +15,6 @@ namespace FastScooter.API.Test;
 
 public class UserControllerUnitTest
 {
-    /*[Fact]
-    public async Task Get_WhenCalled_ReturnsNotFoundResult()
-    {
-        // Arrange
-        var mockUserInfrastructure = new Mock<IUserInfrastructure>();
-        var mockUserDomain = new Mock<IUserDomain>();
-        var mockMapper = new Mock<IMapper>();
-        var users = new List<User>();
-        mockUserInfrastructure.Setup(x => x.GetUsersAsync()).ReturnsAsync(users);
-        var controller = new UserController(mockUserInfrastructure.Object, mockUserDomain.Object, mockMapper.Object);
-
-        // Act
-        var result = await controller.Get();
-
-        // Assert
-        var notFoundResult = Assert.IsType<NotFoundResult>(result);
-    }*/
-    
     [Fact]
     public async Task Get_WhenExceptionIsThrown_ReturnsStatusCode500InternalServerError()
     {
@@ -82,30 +64,6 @@ public class UserControllerUnitTest
         var returnValue = Assert.IsType<UserResponse>(okResult.Value);
         Assert.Equal(user.Name, returnValue.Name);
     }
-    
-    /*[Fact]
-    public async Task Get_ById_WhenCalled_ReturnsNotFoundResult()
-    {
-        // Arrange
-        var mockUserInfrastructure = new Mock<IUserInfrastructure>();
-        var mockUserDomain = new Mock<IUserDomain>();
-        var mockMapper = new Mock<IMapper>();
-        var user = new User
-        {
-            Name = "Test User",
-            Email = "testuser@example.com",
-            Password = "password123",
-            Role = "Admin"
-        };
-        mockUserInfrastructure.Setup(x => x.GetUserByIdAsync(It.IsAny<int>())).ReturnsAsync((User)null);
-        var controller = new UserController(mockUserInfrastructure.Object, mockUserDomain.Object, mockMapper.Object);
-
-        // Act
-        var result = await controller.Get(1);
-
-        // Assert
-        var notFoundResult = Assert.IsType<NotFoundResult>(result);
-    } */
 
     [Fact]
     public async Task Put_WhenCalled_ReturnsOkResult()
@@ -148,7 +106,7 @@ public class UserControllerUnitTest
         var statusCodeResult = Assert.IsType<StatusCodeResult>(result);
         Assert.Equal(200, statusCodeResult.StatusCode);
     }
-    
+
     [Fact]
     public async Task Get_WhenCalled_ReturnsOkResult()
     {
@@ -156,15 +114,15 @@ public class UserControllerUnitTest
         var mockUserInfrastructure = new Mock<IUserInfrastructure>();
         var mockUserDomain = new Mock<IUserDomain>();
         var mockMapper = new Mock<IMapper>();
-       var users = new List<User> 
-        { 
+        var users = new List<User>
+        {
             new User
             {
                 Name = "Test User",
                 Email = "testuser@example.com",
                 Password = "password123",
                 Role = "Admin"
-            } 
+            }
         };
         var userResponses = new List<UserResponse>
         {
@@ -219,7 +177,7 @@ public class UserControllerUnitTest
         var objectResult = Assert.IsType<ObjectResult>(result);
         Assert.Equal(201, objectResult.StatusCode);
     }
-    
+
     [Fact]
     public async Task Post_WhenCalledWithNull_ReturnsBadRequest()
     {
@@ -235,5 +193,21 @@ public class UserControllerUnitTest
         // Assert
         Assert.IsType<BadRequestResult>(result);
     }
-        
+
+
+    [Fact]
+    public async Task Put_WhenCalledWithNull_ReturnsBadRequest()
+    {
+        // Arrange
+        var mockUserInfrastructure = new Mock<IUserInfrastructure>();
+        var mockUserDomain = new Mock<IUserDomain>();
+        var mockMapper = new Mock<IMapper>();
+        var controller = new UserController(mockUserInfrastructure.Object, mockUserDomain.Object, mockMapper.Object);
+
+        // Act
+        var result = await controller.Put(1, null);
+
+        // Assert
+        Assert.IsType<BadRequestResult>(result);
+    }
 }
