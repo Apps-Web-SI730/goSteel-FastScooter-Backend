@@ -3,57 +3,55 @@ using System.Security.Claims;
 using System.Text;
 using FastScooter.Domain.Interfaces;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.VisualBasic;
-using Constants=FastScooter.Shared.Constants;
 
-namespace FastScooter.Domain.Domain;
-
-public class TokenDomain: ITokenDomain
-
+namespace FastScooter.Domain.Domain
 {
-    public string GenerateJwt(string username)
+    public class TokenDomain : ITokenDomain
     {
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(Constants.SecretKey);
-        var tokenDescriptor = new SecurityTokenDescriptor
+        public string GenerateJwt(string username)
         {
-            Subject = new ClaimsIdentity(new[] { new Claim("username", username) }),
-            Expires = DateTime.UtcNow.AddDays(1),
-            SigningCredentials =
-                new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-        };
-        var token = tokenHandler.CreateToken(tokenDescriptor);
-        return tokenHandler.WriteToken(token);
-    }
-
-    public string ValidateJwt(string token)
-    {
-        if (token == null)
-            return null;
-
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(Constants.SecretKey);
-        try
-        {
-            tokenHandler.ValidateToken(token, new TokenValidationParameters
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(FastScooter.Shared.Constants.SecretKey);
+            var tokenDescriptor = new SecurityTokenDescriptor
             {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
-                ClockSkew = TimeSpan.Zero
-            }, out var validatedToken);
-
-            var jwtToken = (JwtSecurityToken)validatedToken;
-            var username = jwtToken.Claims.First(x => x.Type == "username").Value;
-
-            // return user id from JWT token if validation successful
-            return username;
+                Subject = new ClaimsIdentity(new[] { new Claim("username", username) }),
+                Expires = DateTime.UtcNow.AddDays(1),
+                SigningCredentials =
+                    new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
-        catch
+
+        public string ValidateJwt(string token)
         {
-            return null;
+            if (token == null)
+                return null;
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(FastScooter.Shared.Constants.SecretKey);
+            try
+            {
+                tokenHandler.ValidateToken(token, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
+                    ClockSkew = TimeSpan.Zero
+                }, out var validatedToken);
+
+                var jwtToken = (JwtSecurityToken)validatedToken;
+                var username = jwtToken.Claims.First(x => x.Type == "username").Value;
+
+                // return user id from JWT token if validation successful
+                return username;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

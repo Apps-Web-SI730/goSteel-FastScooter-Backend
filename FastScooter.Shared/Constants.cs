@@ -1,7 +1,8 @@
-namespace FastScooter.Shared;
-
-public class Constants
+namespace FastScooter.Shared
 {
-    public const string SecretKey = "arturo_and_scoot_did_nothing";
-
+    public class Constants
+    {
+        // Asegúrate de que la clave tenga al menos 256 bits (32 caracteres)
+        public const string SecretKey = "YourFixedSecretKey1234567890123456";
+    }
 }
