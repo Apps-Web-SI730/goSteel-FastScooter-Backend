@@ -105,8 +105,16 @@ public class UserMySQLInfrastructure : IUserInfrastructure
         return _fastScooterContext.Users.Any(u => u.Id == id && u.IsActive==true);
     }
 
-    public Task<int> Signup(User user)
+    public async Task<int> Signup(User user)
     {
-        throw new NotImplementedException();
+        user.DateCreated = DateTime.Now;
+        user.Role = "admin";
+        _fastScooterContext.Users.Add(user);
+        await _fastScooterContext.SaveChangesAsync();
+        return user.Id;    }
+
+    public async Task<User> GetByUsername(string username)
+    {
+        return await _fastScooterContext.Users.SingleAsync(u => u.Email == username);
     }
 }

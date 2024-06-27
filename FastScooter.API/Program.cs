@@ -24,6 +24,8 @@ builder.Services.AddScoped<IFavoriteInfrastructure, FavoritesMySQLInfrastructure
 builder.Services.AddScoped<IFavoriteDomain, FavoriteDomain>();
 builder.Services.AddScoped<IPaymentInfrastructure, PaymentMySQLInfrastructure>();
 builder.Services.AddScoped<IPaymentDomain, PaymentDomain>();
+builder.Services.AddScoped<ITokenDomain, TokenDomain>();
+builder.Services.AddScoped<IEncryptDomain, EncryptDomain>();
 // Dependency Injection: AddAutoMapper
 builder.Services.AddAutoMapper(
     // typeof(ModelToResponse),

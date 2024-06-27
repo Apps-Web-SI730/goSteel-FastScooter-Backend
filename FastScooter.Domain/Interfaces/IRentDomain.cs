@@ -13,5 +13,7 @@ public interface IRentDomain
     
     public bool CancelUnfinishedRent(int id);
 
+    Task<List<Rent>> GetAllByUserId(int id);
+
 
 }

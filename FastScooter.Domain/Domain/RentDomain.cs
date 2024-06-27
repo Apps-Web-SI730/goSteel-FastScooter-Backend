@@ -75,6 +75,13 @@ public class RentDomain : IRentDomain
         return true;
     }
 
+    public Task<List<Rent>> GetAllByUserId(int id)
+    {
+        if (!_userInfrastructure.ExistsById(id))
+            throw new Exception("The user is invalid");
+        return _rentInfrastructure.GetByUserId(id);
+    }
+
     private void ValidateScooterAvailability(int bikeId, DateTime startDate, DateTime endDate)
     {
         var rents = _rentInfrastructure.GetByScooterIdNoAsync(bikeId);

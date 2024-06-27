@@ -78,6 +78,24 @@ public class RentController : ControllerBase
         return _rentDomain.AvailableScooter(bikeId, start, end);
     }
     
+    [HttpGet("userId/{userId}", Name = "GetAllRentByUserId")]
+    public async Task<ActionResult<List<RentResponse>>> GetAllByUserId(int userId)
+    {
+        try
+        {
+            var payments = await _rentDomain.GetAllByUserId(userId);
+
+            // Mapea la lista de favoritos al tipo de respuesta esperado
+            var paymentResponses = _mapper.Map<List<PaymentResponse>>(payments);
+
+            return Ok(paymentResponses);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
+        }
+    }
+    
     
     // GET: api/rent/available
     [HttpGet("available/", Name = "GetAllAvailableScootersForDate")]

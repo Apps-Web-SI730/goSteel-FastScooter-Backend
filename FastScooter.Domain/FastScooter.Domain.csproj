@@ -7,11 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Model\" />
+      <ProjectReference Include="..\FastScooter.Infrastructure\FastScooter.Infrastructure.csproj" />
+      <ProjectReference Include="..\FastScooter.Shared\FastScooter.Shared.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\FastScooter.Infrastructure\FastScooter.Infrastructure.csproj" />
+      <PackageReference Include="IdentityModel" Version="7.0.0" />
+      <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="7.6.2" />
+      <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="7.6.2" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
     </ItemGroup>
 
 </Project>

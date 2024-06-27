@@ -1,4 +1,5 @@
 using FastScooter.Domain.Interfaces;
+using FastScooter.Domain.Model;
 using FastScooter.Infrastructure.Dtos;
 using FastScooter.Infrastructure.Interfaces;
 using FastScooter.Infrastructure.Models;
@@ -9,11 +10,14 @@ public class UserDomain : IUserDomain
 {
     // Dependency Injection
     private readonly IUserInfrastructure _userInfrastructure;
-    
+    private IEncryptDomain _encryptDomain;
+    private ITokenDomain _tokenDomain;
     // UserDomain Constructor
-    public UserDomain(IUserInfrastructure userInfrastructure)
+    public UserDomain(IUserInfrastructure userInfrastructure, ITokenDomain tokenDomain, IEncryptDomain encryptDomain)
     {
         _userInfrastructure = userInfrastructure;
+        _tokenDomain = tokenDomain;
+        _encryptDomain = encryptDomain;
     }
     
     // Interface methods implementation
@@ -40,6 +44,47 @@ public class UserDomain : IUserDomain
         // TODO: Validations -> PASS TO API LAYER (Request and Response)
         if (!ExistsByIdValidation(id)) throw new Exception("User doesn't exist");
         return await _userInfrastructure.DeleteUserAsync(id);
+    }
+
+    public async Task<User> GetByUsername(string username)
+    {
+        return await _userInfrastructure.GetByUsername(username);
+    }
+
+    public async Task<LoginResponse> LoginRev1(User user)
+    {
+        var foundUser = await _userInfrastructure.GetByUsername(user.Email);
+        
+        if (_encryptDomain.Encrypt(user.Password) == foundUser.Password)
+        {
+            var token = _tokenDomain.GenerateJwt(foundUser.Email);
+            var userId = foundUser.Id;
+            return new LoginResponse
+            {
+                Token = token,
+                Id = userId
+            };
+        }
+        
+        throw new ArgumentException("Invalid username or password");
+    }
+
+    public async Task<int> SignupRev1(User user)
+    {
+        if (ExistsByEmailValidation(user.Email)) throw new Exception("A user already exists with this email");
+        IsValidSave(user);
+        user.Password = _encryptDomain.Encrypt(user.Password);
+        return await _userInfrastructure.Signup(user);
+    }
+    private static void IsValidSave(User user)
+    {
+        if (user.Name.Length == 0) throw new Exception("Name is required");
+        if (user.Email.Length == 0) throw new Exception("Email is required");
+        if (user.Password.Length == 0) throw new Exception("Password is required");
+        if (user.BirthDate.ToString().Length == 0) throw new Exception("BirthDate is required");
+        if (user.Name.Length > 50) throw new Exception("Name has to be less than 50 characters");
+        if (user.Email.Length > 50) throw new Exception("Email has to be less than 50 characters");
+        if (user.BirthDate > DateTime.Now.AddYears(-15)) throw new Exception("User has to be at least 15 years old");
     }
 
     public int Login(User user)
