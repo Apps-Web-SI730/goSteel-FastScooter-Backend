@@ -73,26 +73,6 @@ public class ScooterDomainUnitTest
         Assert.True(result);
     } 
     
-    /*[Fact]
-    public async Task CreateScooterAsync_WhenCalledWithInvalidScooter_ThrowsException()
-    {
-        // Arrange
-        var mockScooterInfrastructure = new Mock<IScooterInfrastructure>();
-        var scooter = new Scooter
-        {
-            Name = "Test Scooter",
-            Brand = "Test Brand",
-            Model = "Test Model",
-            Description = "Test Description",
-            Price = 100,
-            ImageUrl = "TestImageUrl.jpg" // Add this line
-        };
-        var domain = new ScooterDomain(mockScooterInfrastructure.Object);
-
-        // Act & Assert
-        await Assert.ThrowsAsync<Exception>(() => domain.CreateScooterAsync(scooter));
-    }*/
-
     [Fact]
     public async Task UpdateScooterAsync_WhenCalledWithNonExistingId_ThrowsException()
     {
@@ -138,6 +118,26 @@ public async Task CreateScooterAsync_WhenCalledWithInvalidScooter_ThrowsExceptio
         Model = "Test Model",
         Description = "Test Description",
         Price = -1, // Invalid price
+        ImageUrl = "TestImageUrl.jpg"
+    };
+    var domain = new ScooterDomain(mockScooterInfrastructure.Object);
+
+    // Act & Assert
+    await Assert.ThrowsAsync<Exception>(() => domain.CreateScooterAsync(scooter));
+}
+
+[Fact]
+public async Task CreateScooterAsync_WhenCalledWithScooterHavingLongName_ThrowsException()
+{
+    // Arrange
+    var mockScooterInfrastructure = new Mock<IScooterInfrastructure>();
+    var scooter = new Scooter
+    {
+        Name = new string('a', 51), // Invalid name
+        Brand = "Test Brand",
+        Model = "Test Model",
+        Description = "Test Description",
+        Price = 100,
         ImageUrl = "TestImageUrl.jpg"
     };
     var domain = new ScooterDomain(mockScooterInfrastructure.Object);
