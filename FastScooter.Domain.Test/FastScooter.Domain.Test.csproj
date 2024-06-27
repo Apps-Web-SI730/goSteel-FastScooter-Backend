@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+      <PackageReference Include="Moq" Version="4.20.70" />
+      <PackageReference Include="xunit" Version="2.8.1" />
+      <PackageReference Include="xunit.assert" Version="2.8.1" />
+      <PackageReference Include="xunit.extensibility.core" Version="2.8.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FastScooter.Domain\FastScooter.Domain.csproj" />
+      <ProjectReference Include="..\FastScooter.Infrastructure\FastScooter.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>
